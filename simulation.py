@@ -12,7 +12,7 @@ sigma_T = 2
 t_max = 100
 
 # Save series
-tempos, biomassa_v, temp_v, prec_v, vc_v = [], [], [], [], []
+times, biomass_v, temp_v, prec_v, vc_v = [], [], [], [], []
 
 y0 = [V0, T0, P0]
 t0 = 0
@@ -71,12 +71,12 @@ def update_parameters(val):
     beta = slider_beta.val
     delta = slider_gamma.val
     gamma = slider_delta.val
-    # Reinicializa RK45 a partir do estado atual
+
     rk = RK45(
         fun=lambda t, y: model(t, y)[0],
-        t0=tempos[-1] if tempos else t0,
+        t0=times[-1] if times else t0,
         y0=[
-            biomassa_v[-1] if biomassa_v else V0,
+            biomass_v[-1] if biomass_v else V0,
             temp_v[-1] if temp_v else T0,
             prec_v[-1] if prec_v else P0,
         ],
@@ -103,10 +103,10 @@ btn_pause.on_clicked(toggle_pause)
 
 
 def replay(event):
-    global rk, tempos, biomassa_v, temp_v, prec_v, vc_v, paused
-    # Resetar variáveis
-    tempos = []
-    biomassa_v = []
+    global rk, times, biomass_v, temp_v, prec_v, vc_v, paused
+
+    times = []
+    biomass_v = []
     temp_v = []
     prec_v = []
     vc_v = []
@@ -146,20 +146,20 @@ while rk.t < t_max:
         rk.step()
         V, T, P = rk.y
         _, Vc = model(rk.t, rk.y)
-        tempos.append(rk.t)
-        biomassa_v.append(V)
+        times.append(rk.t)
+        biomass_v.append(V)
         temp_v.append(T)
         prec_v.append(P)
         vc_v.append(Vc)
 
-        line_V.set_data(tempos, biomassa_v)
-        line_T.set_data(tempos, temp_v)
-        line_P.set_data(tempos, prec_v)
-        line_Vc.set_data(tempos, vc_v)
+        line_V.set_data(times, biomass_v)
+        line_T.set_data(times, temp_v)
+        line_P.set_data(times, prec_v)
+        line_Vc.set_data(times, vc_v)
 
         zoom_factor = slider_zoom.val
         for ax, data in zip(
-            [ax_V, ax_T, ax_P, ax_Vc], [biomassa_v, temp_v, prec_v, vc_v]
+            [ax_V, ax_T, ax_P, ax_Vc], [biomass_v, temp_v, prec_v, vc_v]
         ):
             data_range = max(data) - min(data)
             if data_range == 0:

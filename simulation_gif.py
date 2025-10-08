@@ -31,30 +31,30 @@ def model(t, y):
 
 # Calc RK45
 y0 = [V0, T0, P0]
-tempos, biomassa_v, temp_v, prec_v, vc_v = [], [], [], [], []
+times, biomass_v, temp_v, prec_v, vc_v = [], [], [], [], []
 
 rk = RK45(fun=lambda t, y: model(t, y)[0], t0=0, y0=y0, t_bound=t_max, max_step=0.01)
 while rk.t < t_max:
     rk.step()
     V, T, P = rk.y
     _, Vc = model(rk.t, rk.y)
-    tempos.append(rk.t)
-    biomassa_v.append(V)
+    times.append(rk.t)
+    biomass_v.append(V)
     temp_v.append(T)
     prec_v.append(P)
     vc_v.append(Vc)
 
-tempos = np.array(tempos)
-biomassa_v = np.array(biomassa_v)
+times = np.array(times)
+biomass_v = np.array(biomass_v)
 temp_v = np.array(temp_v)
 prec_v = np.array(prec_v)
 vc_v = np.array(vc_v)
 
 N_frames = 300
-indices = np.linspace(0, len(tempos) - 1, N_frames, dtype=int)
+indices = np.linspace(0, len(times) - 1, N_frames, dtype=int)
 
-tempos_gif = tempos[indices]
-biomassa_gif = biomassa_v[indices]
+times_gif = times[indices]
+biomass_gif = biomass_v[indices]
 temp_gif = temp_v[indices]
 prec_gif = prec_v[indices]
 vc_gif = vc_v[indices]
@@ -65,7 +65,7 @@ ax_V, ax_T, ax_P, ax_Vc = axs[0, 0], axs[0, 1], axs[1, 0], axs[1, 1]
 lines = []
 for ax, data, label, color in zip(
     [ax_V, ax_T, ax_P, ax_Vc],
-    [biomassa_gif, temp_gif, prec_gif, vc_gif],
+    [biomass_gif, temp_gif, prec_gif, vc_gif],
     ["Biomass", "Temperature", "Precipitation", "Carrying capacity"],
     ["green", "red", "blue", "orange"],
 ):
@@ -80,12 +80,12 @@ for ax, data, label, color in zip(
 
 # Animation
 def animate(i):
-    for line, data in zip(lines, [biomassa_gif, temp_gif, prec_gif, vc_gif]):
-        line.set_data(tempos_gif[:i], data[:i])
+    for line, data in zip(lines, [biomass_gif, temp_gif, prec_gif, vc_gif]):
+        line.set_data(times_gif[:i], data[:i])
     return lines
 
 
-frames = len(tempos_gif)
+frames = len(times_gif)
 interval = 10000 / frames
 
 ani = FuncAnimation(fig, animate, frames=frames, interval=interval, blit=True)
