@@ -34,20 +34,20 @@ plt.subplots_adjust(bottom=0.4, hspace=0.4)
 
 ax_V, ax_T, ax_P, ax_Vc = axs[0, 0], axs[0, 1], axs[1, 0], axs[1, 1]
 
-(line_V,) = ax_V.plot([], [], color="green", label="Biomassa")
-(line_T,) = ax_T.plot([], [], color="red", label="Temperatura")
-(line_P,) = ax_P.plot([], [], color="blue", label="Precipitação")
+(line_V,) = ax_V.plot([], [], color="green", label="Biomass")
+(line_T,) = ax_T.plot([], [], color="red", label="Temperature")
+(line_P,) = ax_P.plot([], [], color="blue", label="Precipitation")
 (line_Vc,) = ax_Vc.plot(
-    [], [], color="orange", linestyle="--", label="Capacidade de Suporte"
+    [], [], color="orange", linestyle="--", label="Carrying capacity"
 )
 
 for ax, ylabel in zip(
     [ax_V, ax_T, ax_P, ax_Vc],
-    ["Biomassa", "Temperatura (°C)", "Precipitação (mm/m)", "Capacidade de Suporte"],
+    ["Biomass", "Temperature (°C)", "Precipitation (mm/m)", "Carrying capacity"],
 ):
     ax.set_xlim(0, t_max)
     ax.set_ylim(0, 500)
-    ax.set_xlabel("Tempo (anos)")
+    ax.set_xlabel("Time (years)")
     ax.set_ylabel(ylabel)
     ax.legend()
 

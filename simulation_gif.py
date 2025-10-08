@@ -66,13 +66,13 @@ lines = []
 for ax, data, label, color in zip(
     [ax_V, ax_T, ax_P, ax_Vc],
     [biomassa_gif, temp_gif, prec_gif, vc_gif],
-    ["Biomassa", "Temperatura", "Precipitação", "Capacidade de Suporte"],
+    ["Biomass", "Temperature", "Precipitation", "Carrying capacity"],
     ["green", "red", "blue", "orange"],
 ):
     (line,) = ax.plot([], [], color=color, label=label)
     ax.set_xlim(0, t_max)
     ax.set_ylim(0, max(data) * 1.1)  # Limite Y individual, 10% acima do máximo
-    ax.set_xlabel("Tempo (anos)")
+    ax.set_xlabel("Time (years)")
     ax.set_ylabel(label)
     ax.legend()
     lines.append(line)
@@ -90,5 +90,5 @@ interval = 10000 / frames
 
 ani = FuncAnimation(fig, animate, frames=frames, interval=interval, blit=True)
 writer = PillowWriter(fps=30)
-ani.save("simulacao_perturbacao.gif", writer=writer)
+ani.save("simulation_disturb.gif", writer=writer)
 print("GIF salvo como 'simulacao_perturbacao.gif'")
