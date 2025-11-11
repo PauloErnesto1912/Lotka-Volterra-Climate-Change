@@ -1,6 +1,6 @@
 # Climate-Biomass Simulation
 
-This project is based on my master's thesis (Dynamical System Modeling of the Influence of Climate Change on Biomass Indicators in the Amazon). The idea is to simulate biomass as a function of perturbations in the climatic patterns of the Amazon region.
+This project is based on my master's thesis (Dynamical System Modeling of the Influence of Climate Change on Biomass Indicators in the Amazon). The idea is to simulate biomass and its response to perturbations in the climatic patterns of the Amazon region.
 
 The simulation implements a **Lotka-Volterra-inspired model** for climate variables:
 
